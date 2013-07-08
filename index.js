@@ -1,9 +1,11 @@
-var express = require("express");
+var express = require("express"),
+    routes = require("./lib/routes");
 
 var app = express();
 
-app.get("/", function(req, res) {
-  res.end("hello orgs");
-});
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+
+routes.define(app);
 
 app.listen(process.env.PORT || 5000);
