@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "description": "The new landing page for student organizations in the College of computing",
   "dependencies": {
-    "express": "*"
+    "express": "*",
+    "passport": "*",
+    "passport-facebook": "*"
   }
 }
