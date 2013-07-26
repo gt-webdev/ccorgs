@@ -1,10 +1,28 @@
 {
   "name": "ccorgs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The new landing page for student organizations in the College of computing",
+  "homepage": "http://ccorgs.com",
+  "bugs": "https://github.com/gt-webdev/ccorgs/issues",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
   "dependencies": {
     "express": "*",
     "passport": "*",
     "passport-facebook": "*"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "react-tools": "*",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-jshint": "~0.6.0",
+    "semver": "~2.0.0",
+    "expect.js": "*",
+    "zombie": "*"
+  },
+  "engines": {
+    "node": ">=0.10.0"
   }
 }

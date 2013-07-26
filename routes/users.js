@@ -1,3 +1,5 @@
+'use strict';
+
 var Users = require('../lib/hardcode').Users,
     util = require('util');
 

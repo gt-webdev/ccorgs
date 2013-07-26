@@ -1,3 +1,5 @@
+'use strict';
+
 var Orgs = require('../lib/hardcode').Orgs,
     util = require('util');
 

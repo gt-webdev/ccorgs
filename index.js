@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require("express"),
     auth = require("./lib/auth"),
     routes = require("./lib/routes");

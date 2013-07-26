@@ -1,3 +1,5 @@
+'use strict';
+
 var Events = require('../lib/hardcode').Events,
     util = require('util');
 
