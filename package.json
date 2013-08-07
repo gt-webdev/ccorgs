@@ -11,7 +11,8 @@
   "dependencies": {
     "express": "*",
     "passport": "*",
-    "passport-facebook": "*"
+    "passport-facebook": "*",
+    "jade": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.0",

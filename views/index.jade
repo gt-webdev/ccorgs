@@ -1,0 +1,15 @@
+doctype
+html
+  head
+    title ccorgs.com
+    script(src='http://fb.me/react-0.4.1.min.js')
+    script(src='/vendor/require.js')
+    script(src='/js/main.js')
+  body
+    header#page-header
+    section#content
+    footer#page-footer
+    if loadPage
+      | <script type='text/javascript'>
+      !=  'CCorgs.loadPage("'+jsView+'",'+JSON.stringify(pageData)+');'
+      | </script>

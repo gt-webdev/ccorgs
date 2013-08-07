@@ -8,14 +8,29 @@ module.exports.viewOrg = function(req, res) {
     if (err) {
       res.send(err);
     } else {
-      res.send(util.inspect(org));
+      res.render('index', {
+        loadPage: true, 
+        jsView: '/js/orgs/viewOrg.js', 
+        pageData: org
+      });
     }
   });
 };
 
 exports.listOrgs = function(req, res) {
   Orgs.getAll(function(err, orgs) {
-    res.send(util.inspect(orgs));
+    if (req.ajaxify) {
+      res.send(JSON.stringify({
+        jsView: '/js/orgs/listOrgs.js',
+        data: orgs
+      }));
+    } else {
+      res.render('index', {
+        loadPage: true, 
+        jsView: '/js/orgs/listOrgs.js', 
+        pageData: orgs
+      });
+    }
   });
 };
 
