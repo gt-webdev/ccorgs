@@ -8,11 +8,18 @@ module.exports.viewOrg = function(req, res) {
     if (err) {
       res.send(err);
     } else {
-      res.render('index', {
-        loadPage: true, 
-        jsView: '/js/orgs/viewOrg.js', 
-        pageData: org
-      });
+      if (req.ajaxify) {
+        res.send(JSON.stringify({
+          jsView: '/js/orgs/viewOrg.js',
+          pageData: org
+        }));
+      } else {
+        res.render('index', {
+          loadPage: true, 
+          jsView: '/js/orgs/viewOrg.js', 
+          pageData: org
+        });
+      }
     }
   });
 };

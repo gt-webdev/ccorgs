@@ -12,16 +12,21 @@ define(
       }
     });
     var NavItem = React.createClass({
+      gotoPage: function() {
+        CCorgs.ajaxifyReq(this.props.path);
+      },
       render: function() {
-        return <li>{this.props.label}</li>;
+        return <li onClick={this.gotoPage}>
+            {this.props.label}
+          </li>;
       }
     });
     commonElements.Navbar = React.createClass({
       render: function() {
         return <nav>
             <NavMenu active={0}>
-              <NavItem idx={0} label={"Orgs"} />
-              <NavItem idx={1} label={"Events"} />
+              <NavItem idx={0} label={"Orgs"} path="/" />
+              <NavItem idx={1} label={"Events"} path="/events" />
             </NavMenu>
           </nav>;
       }

@@ -12,7 +12,8 @@
     "express": "*",
     "passport": "*",
     "passport-facebook": "*",
-    "jade": "*"
+    "jade": "*",
+    "MD5": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.0",

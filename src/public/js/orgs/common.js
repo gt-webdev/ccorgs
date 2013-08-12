@@ -7,23 +7,24 @@ define(
   ["/js/common.js"],
   function(common) {
     var cGravatar = common.Gravatar;
+    var cNavbar = common.Navbar;
     var commonOrgElements = {};
-    commonOrgElements.OrgMiniBox = React.createClass({
+    commonOrgElements.OrgBox = React.createClass({
       render: function() {
         return <div>
-            <a href="#">
-              <cGravatar size={100} />
-              <h4>{"Org Name"}</h4>
-              <p>{"Org Description"}</p>
+            <a href={'/orgs/' + this.props.slug}>
+              <cGravatar hash={this.props.gravatar} size={100}  />
+              <h4>{this.props.title}</h4>
+              <p>{this.props.description}</p>
             </a>
-          </div>
+          </div>;
       }
     });
     commonOrgElements.OrgHeader = React.createClass({
       render: function() {
         return <div>
-          {this.props.title}
-        </div>
+          <cNavbar />
+        </div>;
       }
     });
     return commonOrgElements;
