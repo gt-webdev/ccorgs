@@ -13,7 +13,8 @@
     "passport": "*",
     "passport-facebook": "*",
     "jade": "*",
-    "MD5": "*"
+    "MD5": "*",
+    "async": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.0",

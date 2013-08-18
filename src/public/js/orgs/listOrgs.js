@@ -8,9 +8,9 @@ define(
   function(common) {
     return function(pageData) {
       var OrgBox = common.OrgBox;
-      var OrgHeader = common.OrgHeader;
+      var ListHeader = common.ListHeader;
       React.renderComponent(<div>
-          <OrgHeader />
+          <ListHeader />
         </div>, 
         document.getElementById('page-header'));
       React.renderComponent(<div>

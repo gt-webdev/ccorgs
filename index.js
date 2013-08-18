@@ -1,8 +1,13 @@
 'use strict';
 
-var express = require("express"),
-    auth = require("./lib/auth"),
-    routes = require("./lib/routes");
+var express = require('express'),
+    auth = require('./lib/auth'),
+    Remongo = require('remongo'),
+    models = require('./lib/models'),
+    routes = require('./lib/routes');
+
+var remongo = new Remongo('ccorgs_db');
+models.defineModels(remongo);
 
 var app = express();
 
@@ -15,8 +20,11 @@ app.configure(function() {
   app.use(express.methodOverride());
   app.use(express.static('public'));
   app.use(express.session({secret: process.env.SECRET || 'lol sekret'}));
-  app.use(express.csrf());
   app.use(require('./lib/ajaxify'));
+  app.use(function(req, res, next) {
+    req.models = remongo.models;
+    next();
+  });
 });
 
 auth.setUp(app);
