@@ -7,12 +7,18 @@ define(
   ['marked'],
   function(marked) {
     var commonElements = {};
+    var SignInBtn = React.createClass({
+      render: function() {
+        return <button class='sign-in' onclick={this.showDialog}>Sign In</button>;
+      }
+    });
+    commonElements.SignInBtn = SignInBtn;
     var Link = React.createClass({
       gotoPage: function() {
         CCorgs.ajaxifyReq(this.props.href);
       },
       render: function() {
-        return <div onClick={this.gotoPage}>{this.props.children}</div>;
+        return <div style={{display:'inline'}} onClick={this.gotoPage}>{this.props.children}</div>;
       }
     });
     var NavMenu = React.createClass({
@@ -39,7 +45,7 @@ define(
             break;
           default:
             console.log("unrecognized tab type: "+type);
-            return <article class={this.props.visibility}>{this.props.tab.content || "no content"}</article>
+            return <article class={this.props.visibility}>{this.props.tab.content || <p>{"no content"}</p>}</article>
             break;
         }
       }
@@ -55,14 +61,14 @@ define(
       },
       render: function() {
         var changeTabFunc = this.changeTab;
-        if (!this.props.tabs || !this.props.tabs.length) {
+        if (!this.props.tabs || !Array.isArray(this.props.tabs)) {
           return <div>No Description</div>;
         }
         var state = this.state;
         return <div class='tab-box'>
           <nav>
             {this.props.tabs.map(function(tab) {
-              return <li data-target={tab.name} onClick={changeTabFunc} ref={tab.name + "-nav"}>{tab.title}</li>;
+              return <li data-target={tab.name} class={(tab.name == state.active)?"selected":""} onClick={changeTabFunc} ref={tab.name + "-nav"}>{tab.title}</li>;
             })}
           </nav>
           <section>
@@ -78,8 +84,9 @@ define(
       render: function() {
         return <nav>
             <NavMenu active={0}>
-              <NavItem idx={0} label={"Orgs"} path="/" />
+              <NavItem idx={0} label={"Organizations"} path="/" />
               <NavItem idx={1} label={"Events"} path="/events" />
+              <NavItem idx={2} label={"Calendar"} path="/calendar" />
             </NavMenu>
           </nav>;
       }

@@ -4,19 +4,20 @@
 'use strict';
 
 define(
-  ['/js/orgs/common.js'],
-  function(common) {
+  ['/js/orgs/common.js', '/js/common.js'],
+  function(orgsC, common) {
     return function(pageData) {
-      var OrgBox = common.OrgBox;
-      var ListHeader = common.ListHeader;
+      var OrgBox = orgsC.OrgBox;
+      var ListHeader = orgsC.ListHeader;
+      var SignInBtn = common.SignInBtn;
       React.renderComponent(<div>
           <ListHeader />
         </div>, 
         document.getElementById('page-header'));
       React.renderComponent(<div>
           <section class="main-page">
+            <h1>{"CoC Student Organizations"}</h1>
             {pageData.map(function(org) {
-              console.log(org);
               return <OrgBox 
                 title={org.name} 
                 color={org.cover}
@@ -27,6 +28,12 @@ define(
           </section>
         </div>,
         document.getElementById('content')
+      );
+      React.renderComponent(
+        <div>
+          {"UPCOMING EVENTS"}
+        </div>,
+        document.getElementById('aside')
       );
     };
   }

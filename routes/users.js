@@ -4,13 +4,39 @@ var Users = require('../lib/hardcode').Users,
     util = require('util');
 
 module.exports.viewUser = function(req, res) {
-  Users.getById(req.params["uid"], function(err, user) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(util.inspect(user));
+  if (!req.params["uid"]) {
+    return res.send(404);
+  }
+  req.models.User.findOne(
+    {
+      '_id': req.models.User.ObjectID(req.params["uid"])
+    },
+    [],
+    function(err, user) {
+      if (err) {
+        return res.send(404);
+      }
+      if (!user || !user.values) {
+        return res.send(404);
+      }
+      if (req.ajaxify) {
+        res.send(JSON.stringify({
+          jsView: '/js/users/viewUser.js',
+          pageData: {user: user.valuesFor(
+            ['name', 'short', 'cover', 'emailHash', 'orgs']
+          )}
+        }));
+      } else {
+        res.render('index', {
+          loadPage: true,
+          jsView: '/js/users/viewUser.js',
+          pageData: {user: user.valuesFor(
+            ['name', 'short', 'cover', 'emailHash', 'orgs']
+          )}
+        });
+      }
     }
-  });
+  );
 };
 
 module.exports.viewSelf = function(req, res) {

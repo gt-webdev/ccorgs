@@ -11,19 +11,25 @@ define(
       var EventListHeader = eventC.EventListHeader;
       var EventListItem = eventC.EventListItem;
       var EventHeader = eventC.EventHeader;
-      console.log('here');
       React.renderComponent(<div>
           <EventListHeader />
         </div>, 
         document.getElementById('page-header'));
       React.renderComponent(<div>
           <section class="main-page">
+          <h1>{"Events"}</h1>
           {pageData.events.map(function(event) {
             return <EventListItem event={event} />;
           })}
           </section>
         </div>,
         document.getElementById('content')
+      );
+      React.renderComponent(
+        <div>
+          {"POPULAR ORGS"}
+        </div>,
+        document.getElementById('aside')
       );
     };
   }

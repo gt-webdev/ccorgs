@@ -24,6 +24,7 @@ define(
       ];
       React.renderComponent(
         <div>
+          <h2>{pageData.event.title}</h2>
           <TabBox tabs={pageData.event.desc} />
         </div>,
         document.getElementById('content')

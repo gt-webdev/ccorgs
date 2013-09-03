@@ -1,0 +1,77 @@
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.gravatar-image-100 {
+  display: inline-block;
+}
+
+section.main-page .event-item {
+  border-radius: 10px;
+  margin: 5px 0;
+  padding: 3px;
+  border: 2px solid black;
+}
+
+header#page-header  nav  ul {
+  list-style: none;
+  padding: 0;
+  display: inline;
+}
+
+header#page-header  nav {
+  display: inline;
+}
+
+header#page-header  nav  ul li {
+  display: inline-block;
+  padding: 1em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+header#page-header  .sign-in {
+  display: inline;
+  float: right;
+}
+
+header#page-header {
+  border-bottom: 1px solid black;
+}
+
+section#content {
+  padding: 1em;
+  border-top: 4px solid #fcd700;
+  float: left;
+  width: 100%;
+  max-width: 760px;
+}
+
+aside#aside {
+  border-left: 1px solid black;
+  float: right;
+  width: 200px;
+  height: 100%;
+}
+
+.tab-box nav {
+  list-style: none;
+  padding: 0;
+}
+.tab-box nav li {
+  display: inline-block;
+  padding-right: 1em;
+  font-size: 1.5em;
+  font-color: grey;
+}
+.tab-box nav li.selected {
+  text-decoration: underline;
+  font-weight: bold;
+  font-color: black;
+}
+
+.tab-box .hidden {
+  display: none;
+}
