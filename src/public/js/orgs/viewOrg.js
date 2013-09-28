@@ -13,21 +13,21 @@ define(
       var OrgSection = orgC.OrgSection;
       var TabBox = common.TabBox;
       React.renderComponent(
-        <OrgHeader org={pageData} />,
+        <OrgHeader org={pageData.org} />,
         document.getElementById('page-header')
       );
       var events = [];
-      for (var i = 0; i < pageData.events.length; i++) {
+      for (var i = 0; i < pageData.org.events.length; i++) {
         events.push(<EventBox 
-          event={pageData.events[i]}
-          href={'/'+pageData.slug + '/events/' + pageData.events[i]._id} />);
+          event={pageData.org.events[i]}
+          href={'/'+pageData.org.slug + '/events/' + pageData.org.events[i]._id} />);
       }
       React.renderComponent(
-        <OrgSection org={pageData}>
-          <section style={{borderTopColor: pageData.cover}}>
-            <TabBox tabs={pageData.desc} />
+        <OrgSection org={pageData.org}>
+          <section style={{borderTopColor: pageData.org.cover}}>
+            <TabBox tabs={pageData.org.desc} />
           </section>
-          <section style={{borderTopColor: pageData.cover}}>
+          <section style={{borderTopColor: pageData.org.cover}}>
             <h2>Events</h2>
             {events}
           </section>

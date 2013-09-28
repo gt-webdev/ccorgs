@@ -9,23 +9,12 @@ define(
     return function(pageData) {
       var OrgBox = common.OrgBox;
       var ListHeader = common.ListHeader;
+      var OrgsListSection = common.OrgsListSection;
       React.renderComponent(<div>
           <ListHeader />
         </div>, 
         document.getElementById('page-header'));
-      React.renderComponent(<div>
-          <section class="main-page">
-            {pageData.map(function(org) {
-              return <OrgBox 
-                list={true}
-                title={org.name} 
-                color={org.cover}
-                description={org.short}
-                slug={org.slug}
-                gravatar={org.emailHash} />;
-            })}
-          </section>
-        </div>,
+      React.renderComponent(<OrgsListSection orgs={pageData.orgs} type='abc' />,
         document.getElementById('content')
       );
       React.renderComponent(

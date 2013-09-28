@@ -16,18 +16,8 @@ module.exports.viewOrg = function(req, res) {
       if (!org || !org.values) {
         return res.send(404);
       }
-      if (req.ajaxify) {
-        res.send(JSON.stringify({
-          jsView: '/js/orgs/viewOrg.js',
-          pageData: org.values
-        }));
-      } else {
-        res.render('index', {
-          loadPage: true,
-          jsView: '/js/orgs/viewOrg.js',
-          pageData: org.values
-        });
-      }
+      res.renderWithAjax('/js/orgs/viewOrg.js',
+        {org: org.values});
     }
   );
 };
@@ -48,20 +38,32 @@ exports.listOrgs = function(req, res) {
           cb(null, org.values);
         },
         function(err, orgsArr) {
-          if (req.ajaxify) {
-            res.send(JSON.stringify({
-              jsView: '/js/orgs/listOrgs.js',
-              pageData: orgsArr
-            }));
-          } else {
-            res.render('index', {
-              loadPage: true,
-              jsView: '/js/orgs/listOrgs.js',
-              pageData: orgsArr
-            });
-          }
+          res.renderWithAjax('/js/orgs/listOrgs.js',
+            {orgs: orgsArr});
         }
       );
+    }
+  );
+};
+
+exports.addMember = function(req, res) {
+  req.models.Org.findOne(
+    {slug: req.params["vanity"]},
+    [],
+    function(err, org) {
+      if (err) {
+        return res.send(404);
+      }
+      if (!org || !org.values) {
+        return res.send(404);
+      }
+      org.embed('members', req.user);
+      org.save(function(err, orgObj) {
+        if (err) {
+          return res.send(500);
+        }
+        res.redirect('/orgs/' + req.params["vanity"]);
+      });
     }
   );
 };

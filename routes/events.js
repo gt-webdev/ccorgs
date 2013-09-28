@@ -19,18 +19,8 @@ module.exports.listEvents = function(req, res) {
           cb(null, event.values);
         },
         function(err, eventsArr) {
-          if (req.ajaxify) {
-            res.send(JSON.stringify({
-              jsView: '/js/events/listEvents.js',
-              pageData: {events: eventsArr}
-            }));
-          } else {
-            res.render('index', {
-              loadPage: true,
-              jsView: '/js/events/listEvents.js',
-              pageData: {events: eventsArr}
-            });
-          }
+          res.renderWithAjax('/js/events/listEvents.js',
+            {events: eventsArr});
         }
       );
     }
@@ -58,18 +48,8 @@ module.exports.listEventsFromOrg = function(req, res) {
           cb(null, event.values);
         },
         function(err, eventsArr) {
-          if (req.ajaxify) {
-            res.send(JSON.stringify({
-              jsView: '/js/events/listEvents.js',
-              pageData: {events: eventsArr}
-            }));
-          } else {
-            res.render('index', {
-              loadPage: true,
-              jsView: '/js/events/listEvents.js',
-              pageData: {events: eventsArr}
-            });
-          }
+          res.renderWithAjax('/js/events/listEvents.js',
+            {events: eventsArr});
         }
       );
     }
@@ -93,18 +73,8 @@ module.exports.viewEvent = function(req, res) {
       if (!event || !event.values) {
         return res.send(404);
       }
-      if (req.ajaxify) {
-        res.send(JSON.stringify({
-          jsView: '/js/events/viewEvent.js',
-          pageData: {event: event.values}
-        }));
-      } else {
-        res.render('index', {
-          loadPage: true,
-          jsView: '/js/events/viewEvent.js',
-          pageData: {event: event.values}
-        });
-      }
+      res.renderWithAjax('/js/events/viewEvent.js',
+        {event: event.values});
     }
   );
 };
@@ -136,18 +106,8 @@ module.exports.viewLatest = function(req, res) {
         }
         var event = events[0];
         //render view
-        if (req.ajaxify) {
-          res.send(JSON.stringify({
-            jsView: '/js/events/viewEvent.js',
-            pageData: {event: event.values}
-          }));
-        } else {
-          res.render('index', {
-            loadPage: true,
-            jsView: '/js/events/viewEvent.js',
-            pageData: {event: event.values}
-          });
-        }
+        res.renderWithAjax('/js/events/viewEvent.js',
+          {event: event.values});
       });
     }
   );

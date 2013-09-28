@@ -18,7 +18,6 @@ CCorgs.loadPage = function(module, pageData) {
 };
 
 CCorgs.ajaxifyReq = function(path) {
-  console.log("loading "+path);
   var xhr = new XMLHttpRequest();
   xhr.open("GET", path + "?format=json", true);
   xhr.setRequestHeader("accepts", "application/json");
@@ -32,6 +31,24 @@ CCorgs.ajaxifyReq = function(path) {
     }
   };
   xhr.send();
+};
+
+CCorgs.RESTReq = function(method, path, data) {
+  var xhr = new XMLHttpRequest();
+  xhr.open(method, path + "?format=json", true);
+  xhr.setRequestHeader("accepts", "application/json");
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var xhrJson = JSON.parse(xhr.response);
+      if (xhrJson.jsView && xhrJson.pageData) {
+        history.pushState(null, null, path);
+        CCorgs.loadPage(xhrJson.jsView, xhrJson.pageData);
+      }
+    }
+  };
+  if (method === "POST" || method === "PUT") {
+    xhr.send(data || {});
+  }
 };
 
 window.addEventListener('popstate', function(e) {

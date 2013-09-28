@@ -8,6 +8,10 @@ body {
   display: inline-block;
 }
 
+section.main-page {
+  border-top-color: #fcd700;
+}
+
 section.main-page .event-item {
   border-radius: 10px;
   margin: 5px 0;
@@ -46,15 +50,18 @@ header#page-header {
 }
 
 section#content {
-  padding: 1em;
-  border-top: 4px solid #fcd700;
+/*  padding: 1em;
+  border-top: 4px solid #fcd700;*/
   float: left;
-  width: 100%;
-  max-width: 760px;
+  width: 760px;
   position: relative;
 }
+
+section#content > div > section.main-page {
+  padding: 1em;
+}
 section#content .github-fork{
-  position: fixed;
+  position: absolute;
   right: 0;
   top: 0;
 }
@@ -95,8 +102,14 @@ section#content .fb-pile{
   height: 100px;
   float: right;
 }
-section#content header img {
+section#content .org-section header img {
   float: left;
+}
+section#content .org-list-section header img {
+  height: 75px;
+}
+section#content > div > header {
+  padding: 0.8em;
 }
 section#content > div > header > h2 {
   float: left;
@@ -108,15 +121,32 @@ section#content > div > section {
   border-top-style: solid;
   clear: both;
 }
-section#content > div > header {
-  min-height: 120px;
+section#content > div.orgs-list-section {
+  border-top: 5px solid #fcd700;
+}
+section#content > div.org-section {
+  border-top: 5px solid;
+}
+section#content > div.org-section > header {
+  min-height: 100px;
+}
+section#content > div.orgs-list-section > header > h1 {
+  float: left;
+}
+
+section#content > div.orgs-list-section > header > h3.orgs-list-type-switcher {
+  cursor: pointer;
+  float: right;
 }
 
 aside#aside {
-  border-left: 1px solid black;
-  float: right;
-  width: 200px;
+  /*float: right;*/
+  width: 100%;
   height: 100%;
+  text-align: center;
+}
+
+aside#aside > div {
 }
 
 .tab-box nav {
@@ -128,6 +158,7 @@ aside#aside {
   padding-right: 1em;
   font-size: 1.5em;
   font-color: grey;
+  cursor: pointer;
 }
 .tab-box nav li.selected {
   text-decoration: underline;
