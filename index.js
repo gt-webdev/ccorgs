@@ -2,9 +2,15 @@
 
 var express = require('express'),
     auth = require('./lib/auth'),
+    reactMiddleware = require('react-page-middleware'),
     Remongo = require('remongo'),
     models = require('./lib/models'),
-    routes = require('./lib/routes');
+    pages = require('./lib/pages'),
+    actions = require('./lib/actions');
+    //routes = require('./lib/routes');
+
+var REACT_LOCATION = __dirname + '/node_modules/react-tools/src';
+var ROOT_DIR = __dirname;
 
 var remongo = new Remongo('ccorgs_db');
 models.defineModels(remongo);
@@ -14,6 +20,15 @@ var app = express();
 app.configure(function() {
   app.set('view engine', 'jade');
   app.set('views', __dirname + '/views');
+  app.use(reactMiddleware.provide({
+    logTiming: true,
+    pageRouteRoot: ROOT_DIR,
+    useSourceMaps: true,
+    projectRoot: ROOT_DIR,
+    ignorePaths: function(p) {
+      return p.indexOf('__tests__') !== -1;
+    }
+  }));
   app.use(express.logger());
   app.use(express.cookieParser());
   app.use(express.bodyParser());
@@ -28,7 +43,9 @@ app.configure(function() {
 });
 
 auth.setUp(app);
-routes.define(app);
+pages.configure(app);
+actions.configure(app);
+//routes.define(app);
 var port = process.env.PORT || 5000;
 app.listen(port);
 

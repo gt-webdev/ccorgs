@@ -9,9 +9,13 @@
     "test": "grunt test"
   },
   "dependencies": {
+    "React": "git://github.com/facebook/react.git",
+    "react-page-middleware": "git://github.com/facebook/react-page-middleware.git",
     "express": "*",
     "passport": "*",
     "passport-facebook": "*",
+    "passport-google-oauth": "*",
+    "passport-github": "*",
     "jade": "*",
     "MD5": "*",
     "async": "*"
