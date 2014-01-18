@@ -9,6 +9,7 @@
     "test": "grunt test"
   },
   "dependencies": {
+    "remongo": "git://github.com/thedekel/remongo.git",
     "react": "*",
     "express": "*",
     "passport": "*",

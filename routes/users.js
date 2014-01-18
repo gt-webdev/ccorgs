@@ -3,79 +3,105 @@
 var Users = require('../lib/hardcode').Users,
     util = require('util');
 
-module.exports.viewUser = function(req, res) {
-  if (!req.params["uid"]) {
-    return res.send(404);
-  }
-  req.models.User.findOne(
-    {
-      '_id': req.models.User.ObjectID(req.params["uid"])
-    },
-    [],
-    function(err, user) {
-      if (err) {
-        return res.send(404);
-      }
-      if (!user || !user.values) {
-        return res.send(404);
-      }
-      if (req.ajaxify) {
-        res.send(JSON.stringify({
-          jsView: '/js/users/viewUser.js',
-          pageData: {user: user.valuesFor(
-            ['name', 'short', 'cover', 'emailHash', 'orgs']
-          )}
-        }));
-      } else {
-        res.render('index', {
-          loadPage: true,
-          jsView: '/js/users/viewUser.js',
-          pageData: {user: user.valuesFor(
-            ['name', 'short', 'cover', 'emailHash', 'orgs']
-          )}
-        });
-      }
-    }
+
+//section: REDIRECTS
+
+/* GET /users/profile
+ * sends the user to his own profile page */
+exports.viewSelf = function(req, res) {
+  res.redirect('/users/profile/'+req.user.values._id);
+};
+
+
+//section: PAGES
+
+/* GET /users/profile/:uid
+ * profile page for a specific user*/
+exports.viewUser = function(req, res) {
+  var options = { xhr: req.xhr };
+  res.render('js/views/user/profile', options);
+};
+
+/* GET /users/notifications
+ * view all the notifications for the current user */
+exports.viewNotifications = function(req, res) {
+  var options = { xhr: req.xhr };
+  res.render('js/views/user/notifications', options);
+};
+
+/* GET /users/messages
+ * view all the messages for the current user */
+exports.viewMessages = function(req, res) {
+  var options = { xhr: req.xhr };
+  res.render('js/views/user/messages', options);
+};
+
+/* GET /users -- requiresDekel
+ * view all users on the site, super admin only */
+exports.usersList = function(req, res) {
+  var options = { xhr: req.xhr };
+  res.render('js/views/user/list', options);
+};
+
+
+//section: ACTIONS
+
+/* PUT /users/profile/:uid -- requiresLogin
+ * Make changes to your own user or force changes on other users (admin) */
+exports.editUser = function(req, res) {
+  res.send(JSON.stringify(
+      {message: 'request to change user' + 
+      ' from userid='+req.user.values._id}
+    )
   );
 };
 
-module.exports.viewSelf = function(req, res) {
-  res.send(util.inspect(req.user));
+/* PUT /users/profile/:uid -- requiresLogin
+ * Make changes to your own user or force changes on other users (admin) */
+exports.editUser = function(req, res) {
+  res.send(JSON.stringify(
+      {message: 'request to edit user' + 
+      ' from userid='+req.user.values._id}
+    )
+  );
 };
 
-module.exports.listUsers = function(req, res) {
-  Users.getAll(function(err, users) {
-    res.send(util.inspect(users));
-  });
+/* DELETE /users/profile/:uid/services -- requiresLogin
+ * unauthenticate a service (i.e. facebook, g+, github) */
+exports.removeService = function(req, res) {
+  res.send(JSON.stringify(
+      {message: 'request to unauthenticate service' + 
+      ' from userid='+req.user.values._id}
+    )
+  );
 };
 
-module.exports.updateUser = function(req, res, next) {
-  var userid;
-  if (req.params['uid']) {
-    userid = req.params['uid'];
-  } else if (req.user) {
-    userid = req.user.id;
-  } else {
-    next(404);
-  }
-  Users.getById(userid, function(err, user) {
-    if (err) {
-      next(err);
-    } else {
-      Users.updateUser(user, function(err) {
-        if (err) {
-          return next(err);
-        }
-        next();
-      });
-    }
-  });
+/* DELETE /users/profile/:uid -- requiresLogin
+ * Disables a user; unauthenticate all services and prevent checkins */
+exports.disableUser = function(req, res) {
+  res.send(JSON.stringify(
+      {message: 'request to disable user' + 
+      ' from userid='+req.user.values._id}
+    )
+  );
 };
 
-/* module.exports.createUser
- *
- * you're probably reading this comment because you searched the file for the
- * handler function that creates a new user. This function doesn't exist 
- * because managing the creation of users is a responsibilities of the 
- * authentication library. createUser() exists in `lib/auth.js`
- */
+/* DELETE /users/profile/:uid/perma -- requiresDekel
+ * Permanently deletes a user and all records of him */
+exports.permaDeleteUser = function(req, res) {
+  res.send(JSON.stringify(
+      {message: 'request to permanently delete user' + 
+      ' from userid='+req.user.values._id}
+    )
+  );
+};
+
+/* POST /users/profile/:uid/perma -- requiresLogin
+ * post a request to the site admin to prema-delete self*/
+exports.requestRemoval = function(req, res) {
+  res.send(JSON.stringify(
+      {message: 'request for admin removal of current user' + 
+      ' from userid='+req.user.values._id}
+    )
+  );
+};

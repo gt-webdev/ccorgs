@@ -27,23 +27,22 @@ exports.vanityRedirect = function(req, res) {
 /* GET /orgs
  * show all the orgs on the system. Act as main page for the site */
 exports.listOrgs = function(req, res) {
-  req.models.Org.customSearch(
-    {},
-    [],
+  req.models.Org.customSearch({},[],
     function(err, orgs) {
-      if (err) {
-        return res.send(404);
-      }
-      if (!orgs) {
-        return res.send(404);
-      }
+      if (err) { return res.send(404); }
+      if (!orgs || orgs.length === 0) { return res.send(404); }
       async.map(orgs,
         function(org, cb) {
           cb(null, org.values);
         },
         function(err, orgsArr) {
-          res.renderWithAjax('/js/orgs/listOrgs.js',
-            {orgs: orgsArr});
+          res.render('js/views/org/list', {
+            xhr: req.xhr, 
+            props: {
+              orgs: orgsArr,
+              user: req.user
+            }
+          });
         }
       );
     }
@@ -54,17 +53,11 @@ exports.listOrgs = function(req, res) {
  * show a single org's page */
 exports.viewOrg = function(req, res) {
   req.models.Org.findOne(
-    {slug: req.params["vanity"]},
-    [],
+    {slug: req.params["vanity"]}, [],
     function(err, org) {
-      if (err) {
-        return res.send(404);
-      }
-      if (!org || !org.values) {
-        return res.send(404);
-      }
-      res.renderWithAjax('/js/orgs/viewOrg.js',
-        {org: org.values});
+      if (err) { return res.send(404); }
+      if (!org || !org.values) { return res.send(404); }
+      res.render('js/views/org/org', {xhr: req.xhr, org: org.values});
     }
   );
 };
@@ -73,8 +66,7 @@ exports.viewOrg = function(req, res) {
 /* GET /orgs/create -- requiresDekel
  * the form that creates a new org */
 exports.createOrgForm = function(req, res) {
-  res.renderWithAjax('/js/orgs/createOrgForm.js',
-    {});
+  res.render('js/views/org/create', {xhr: req.xhr});
 };
 
 
